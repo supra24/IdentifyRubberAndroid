@@ -22,16 +22,17 @@ public class MainActivity extends Activity {
     private int PICK_IMAGE_REQUEST = 1;
     private ImageView imgViewPhoto=null;
     private Uri imageUri=null;
-
+    private Button bSelectPicture, bTakePicture, bRun;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button bSelectPicture, bTakePicture;
+
 
         bSelectPicture = (Button) findViewById(R.id.buttonSelectPicture);
         bTakePicture = (Button) findViewById(R.id.buttonTakePicture);
+        bRun = (Button) findViewById(R.id.buttonRun);
 
         imgViewPhoto = (ImageView) findViewById(R.id.imgPicture);
     }
@@ -50,6 +51,10 @@ public class MainActivity extends Activity {
         startActivityForResult(cameraIntent, CAMERA_REQUEST);
     }
 
+    public void ActionButtonRun(View view){
+
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -66,6 +71,8 @@ public class MainActivity extends Activity {
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
+            bRun.setVisibility(View.VISIBLE);
+
         }
     }
 
@@ -75,16 +82,15 @@ public class MainActivity extends Activity {
         if (savedInstanceState.getBoolean("wasImage") == true) {
             imgViewPhoto.setImageBitmap((Bitmap) savedInstanceState.getParcelable("image"));
             imageUri = savedInstanceState.getParcelable("imageUri");
+            bRun.setVisibility(View.VISIBLE);
         }
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-//        outState.putParcelable("image", outState.getParcelable("image"));
         InputStream imputStream;
         if ( (imageUri!=null)) {
-            // (imgViewPhoto != null) &&
             outState.putParcelable("imageUri", imageUri);
             try {
                 imputStream = getContentResolver().openInputStream(imageUri);

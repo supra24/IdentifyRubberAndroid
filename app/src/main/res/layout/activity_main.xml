@@ -7,9 +7,10 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.damian.identifyrubber.MainActivity">
+    tools:context="com.example.damian.identifyrubber.MainActivity"
+    android:clickable="true">
 
-    <Button
+    <ToggleButton
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,17 +18,53 @@
         android:id="@+id/buttonSelectPicture"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:onClick="ActionButtonSelectPicture"/>
+        android:onClick="ActionButtonSelectPicture"
+        android:background="@android:drawable/ic_menu_gallery"
+        android:checked="false"
+        android:clickable="true"
+        android:maxHeight="15dp"
+        android:maxWidth="15dp"
+        android:lines="0"
+        android:longClickable="false"
+        android:backgroundTint="#ffff00" />
 
-    <Button
+    <ToggleButton
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TAKE PICTURE"
         android:id="@+id/buttonTakePicture"
+        android:onClick="ActionButtonTakePicture"
+        android:background="@android:drawable/ic_menu_camera"
+        android:checked="false"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:onClick="ActionButtonTakePicture"/>
+        android:layout_toEndOf="@+id/buttonSelectPicture"
+        android:clickable="true"
+        android:textOff="@android:string/untitled"
+        android:textOn="@android:string/untitled"
+        android:longClickable="false"
+        android:maxHeight="15dp"
+        android:maxWidth="15dp"
+        android:lines="0"
+        android:backgroundTint="#ffff00" />
+
+    <ToggleButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonRun"
+        android:checked="false"
+        android:background="@android:drawable/ic_media_play"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/buttonTakePicture"
+        android:visibility="invisible"
+        android:text="Run"
+        android:clickable="true"
+        android:onClick="ActionButtonRun"
+        android:nestedScrollingEnabled="false"
+        android:maxHeight="15dp"
+        android:maxWidth="15dp"
+        android:lines="0"
+        android:backgroundTint="#ffff00" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -36,9 +73,10 @@
         android:visibility="visible"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        android:layout_alignParentTop="true"
+        android:background="#000000" />
 
 
 </RelativeLayout>
