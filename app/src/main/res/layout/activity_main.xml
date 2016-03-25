@@ -33,11 +33,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imgPicture"
-        android:layout_below="@+id/buttonSelectPicture"
-        android:layout_alignEnd="@+id/buttonTakePicture"
-        android:layout_alignParentBottom="true"
+        android:visibility="visible"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
-        android:visibility="visible" />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:scaleType="centerCrop" />
 
 
 </RelativeLayout>
