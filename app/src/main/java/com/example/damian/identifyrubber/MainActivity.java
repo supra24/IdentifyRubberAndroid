@@ -4,11 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.ImageFormat;
 import android.net.Uri;
-import android.os.Parcelable;
 import android.provider.MediaStore;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -29,6 +26,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // przypisanie id
         bSelectPicture = (Button) findViewById(R.id.buttonSelectPicture);
         bTakePicture = (Button) findViewById(R.id.buttonTakePicture);
         bRun = (Button) findViewById(R.id.buttonRun);
@@ -36,7 +34,7 @@ public class MainActivity extends Activity {
         imgViewPhoto = (ImageView) findViewById(R.id.imgPicture);
     }
 
-    public void ActionButtonSelectPicture (View view){
+    public void ActionButtonSelectPicture (View view){  // akcja dla otworzenia galeri
         Intent intent = new Intent(Intent.ACTION_PICK);
 
         intent.setType("image/*"); // wybierz zdjęcie ze wszysktkich rozszezeń
@@ -45,13 +43,13 @@ public class MainActivity extends Activity {
 
     }
 
-    public void ActionButtonTakePicture ( View view){
+    public void ActionButtonTakePicture ( View view){ // akcja dla zrobienia zdjęcia
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
         startActivityForResult(cameraIntent, CAMERA_REQUEST);
     }
 
-    public void ActionButtonRun(View view){
+    public void ActionButtonRun(View view){ // akcja dla przycisku RUN
 
         GreyScale greyScale = new GreyScale(bitmap1);
         greyScale.Edit();
@@ -64,25 +62,25 @@ public class MainActivity extends Activity {
 
         if ((requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK) || (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK)){
 
-            Uri imageUri = data.getData();
+            Uri imageUri = data.getData(); // zapisanie adresu Uri zdjęcia
             InputStream imputStream;
 
             try {
                 imputStream = getContentResolver().openInputStream(imageUri);
-                Bitmap bitmap = BitmapFactory.decodeStream(imputStream);
-                bitmap1 = Bitmap.createScaledBitmap(bitmap, 816, 612, false);
-                imgViewPhoto.setImageBitmap(bitmap1);
+                Bitmap bitmap = BitmapFactory.decodeStream(imputStream);  // konwersja adresu na bitmap
+                bitmap1 = Bitmap.createScaledBitmap(bitmap, 816, 612, false); // zmniejszenie zdjęcia
+                imgViewPhoto.setImageBitmap(bitmap1);  // dodanie zdjęcia do imageView
 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
 
-            bRun.setVisibility(View.VISIBLE);
+            bRun.setVisibility(View.VISIBLE); // widoczność dla przycisku RUN
         }
     }
 
     @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {  // metoda wywoływana po obruceniu telefonem i otworzeniu nowego activity
         super.onRestoreInstanceState(savedInstanceState);
 
         if (savedInstanceState.getBoolean("wasImage") == true) {
@@ -94,7 +92,7 @@ public class MainActivity extends Activity {
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(Bundle outState) {  // metoda wywoływana po obrocie telefonem i przed zamknięciem starego activity
         super.onSaveInstanceState(outState);
 
         if ( (bitmap1!=null)) {
