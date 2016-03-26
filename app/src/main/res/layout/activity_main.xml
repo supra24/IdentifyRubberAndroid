@@ -8,7 +8,9 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.damian.identifyrubber.MainActivity"
-    android:clickable="true">
+    android:clickable="true"
+    android:visibility="visible"
+    android:transitionGroup="false">
 
     <ToggleButton
         style="?android:attr/buttonStyleSmall"
