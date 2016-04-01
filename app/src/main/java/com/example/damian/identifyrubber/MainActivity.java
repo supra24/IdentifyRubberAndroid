@@ -19,8 +19,9 @@ public class MainActivity extends Activity {
     public static final int CAMERA_REQUEST = 10;
     private int PICK_IMAGE_REQUEST = 1;
     private ImageView imgViewPhoto=null;
-    private Button bSelectPicture, bTakePicture, bRun;
+    private Button bSelectPicture, bTakePicture, bRun, bRun2;
     private Bitmap bitmap1 = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +31,7 @@ public class MainActivity extends Activity {
         bSelectPicture = (Button) findViewById(R.id.buttonSelectPicture);
         bTakePicture = (Button) findViewById(R.id.buttonTakePicture);
         bRun = (Button) findViewById(R.id.buttonRun);
+        bRun2 = (Button) findViewById(R.id.toggleButton);
 
         imgViewPhoto = (ImageView) findViewById(R.id.imgPicture);
     }
@@ -40,7 +42,6 @@ public class MainActivity extends Activity {
         intent.setType("image/*"); // wybierz zdjęcie ze wszysktkich rozszezeń
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
-
     }
 
     public void ActionButtonTakePicture ( View view){ // akcja dla zrobienia zdjęcia
@@ -51,9 +52,19 @@ public class MainActivity extends Activity {
 
     public void ActionButtonRun(View view){ // akcja dla przycisku RUN
 
-        GreyScale greyScale = new GreyScale(bitmap1);
-        greyScale.Edit();
-        bitmap1 = greyScale.getImage();
+        EditPhoto editPhoto = new EditPhoto(bitmap1);
+        editPhoto.GreyScale();
+        bitmap1 = editPhoto.getImage();
+        imgViewPhoto.setImageBitmap(bitmap1);
+//        editPhoto.AnalysisPhoto();
+//        bitmap1 = editPhoto.getImage();
+//        imgViewPhoto.setImageBitmap(bitmap1);
+    }
+
+    public void run2 (View view){
+        EditPhoto editPhoto = new EditPhoto(bitmap1);
+        editPhoto.AnalysisPhoto();
+        bitmap1 = editPhoto.getImage();
         imgViewPhoto.setImageBitmap(bitmap1);
     }
 
@@ -68,13 +79,12 @@ public class MainActivity extends Activity {
             try {
                 imputStream = getContentResolver().openInputStream(imageUri);
                 Bitmap bitmap = BitmapFactory.decodeStream(imputStream);  // konwersja adresu na bitmap
-                bitmap1 = Bitmap.createScaledBitmap(bitmap, 816, 612, false); // zmniejszenie zdjęcia
+                bitmap1 = Bitmap.createScaledBitmap(bitmap, 1024, 768, false); // zmniejszenie zdjęcia
                 imgViewPhoto.setImageBitmap(bitmap1);  // dodanie zdjęcia do imageView
 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-
             bRun.setVisibility(View.VISIBLE); // widoczność dla przycisku RUN
         }
     }
@@ -88,7 +98,6 @@ public class MainActivity extends Activity {
             imgViewPhoto.setImageBitmap(bitmap1);
             bRun.setVisibility(View.VISIBLE);
         }
-
     }
 
     @Override
